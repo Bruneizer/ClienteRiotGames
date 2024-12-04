@@ -1,8 +1,3 @@
-using System.Data;
-using MySqlConnector;
-using Microsoft.Extensions.Configuration;
-using Xunit;
-
 namespace RiotGames.Test;
 
 public class RangoVTests : IDisposable

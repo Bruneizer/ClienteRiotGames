@@ -1,10 +1,3 @@
-using System.Data;
-using MySqlConnector;
-using Microsoft.Extensions.Configuration;
-using ClienteRiotGames.Core;
-using ClienteRiotGames.Dapper;
-using Xunit;
-
 namespace RiotGames.Test;
 
 public class ObjetoTests : IDisposable
