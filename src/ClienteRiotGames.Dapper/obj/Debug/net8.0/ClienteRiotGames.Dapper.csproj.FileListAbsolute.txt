@@ -1,0 +1,15 @@
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\bin\Debug\net8.0\ClienteRiotGames.Dapper.deps.json
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\bin\Debug\net8.0\ClienteRiotGames.Dapper.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\bin\Debug\net8.0\ClienteRiotGames.Dapper.pdb
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\bin\Debug\net8.0\ClienteRiotGames.Core.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\bin\Debug\net8.0\ClienteRiotGames.Core.pdb
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.csproj.AssemblyReference.cache
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.AssemblyInfoInputs.cache
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.AssemblyInfo.cs
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.csproj.CoreCompileInputs.cache
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteR.2896E3C3.Up2Date
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\refint\ClienteRiotGames.Dapper.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ClienteRiotGames.Dapper.pdb
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Dapper\obj\Debug\net8.0\ref\ClienteRiotGames.Dapper.dll

@@ -1,0 +1,11 @@
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\bin\Debug\net8.0\ClienteRiotGames.Core.deps.json
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\bin\Debug\net8.0\ClienteRiotGames.Core.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\bin\Debug\net8.0\ClienteRiotGames.Core.pdb
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ClienteRiotGames.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ClienteRiotGames.Core.AssemblyInfoInputs.cache
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ClienteRiotGames.Core.AssemblyInfo.cs
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ClienteRiotGames.Core.csproj.CoreCompileInputs.cache
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ClienteRiotGames.Core.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\refint\ClienteRiotGames.Core.dll
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ClienteRiotGames.Core.pdb
+C:\Users\armoa\OneDrive\Escritorio\BaseDatos\GitHub\CienteRiotGames\ClienteRiotGames\src\ClienteRiotGames.Core\obj\Debug\net8.0\ref\ClienteRiotGames.Core.dll
