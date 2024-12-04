@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dm4iAKB6aCQ=",
+  "dgSpecHash": "pcZDs2wr0gg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\ClienteRiotGames.Dapper.Test.csproj",
+  "projectFilePath": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\ClienteRiotGames.Dapper.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\armoa\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\armoa\\.nuget\\packages\\dapper\\2.1.15\\dapper.2.1.15.nupkg.sha512",

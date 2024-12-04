@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
+      "projectUniqueName": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
       "projectName": "ClienteRiotGames.Core",
-      "projectPath": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
+      "projectPath": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
       "packagesPath": "C:\\Users\\armoa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\obj\\",
+      "outputPath": "C:\\Users\\armoa\\OneDrive\\Escritorio\\BaseDatos\\GitHub\\CienteRiotGames\\ClienteRiotGames\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\armoa\\AppData\\Roaming\\NuGet\\NuGet.Config"
