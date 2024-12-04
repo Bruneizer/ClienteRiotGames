@@ -59,7 +59,7 @@ namespace RiotGames.Test
         public void InsertarRangoL_DatosInvalidos_DebeLanzarExcepcion(int numero, int puntosCompetitivo)
         {
             // Arrange
-            string nombre = $"Test_{Guid.NewGuid()}";
+            string nombre = $"Test_3232";
             nombre = nombre.Length > 45 ? nombre.Substring(0, 45) : nombre;
 
             // Act & Assert
@@ -80,7 +80,7 @@ namespace RiotGames.Test
         public void InsertarRangoL_PuntosCompetitivosInvalidos_DebeLanzarExcepcion()
         {
             // Arrange
-            string nombre = $"Test_{Guid.NewGuid()}";
+            string nombre = $"Test_123123";
             nombre = nombre.Length > 45 ? nombre.Substring(0, 45) : nombre;
 
             // Act & Assert

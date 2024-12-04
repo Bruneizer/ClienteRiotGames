@@ -21,7 +21,7 @@ public class RangoVTests : IDisposable
     public void InsertarRangoV_DebeInsertarCorrectamente()
     {
         // Arrange
-        string nombre = $"RangoV_{Guid.NewGuid()}";
+        string nombre = $"RangoV_123123";
         int numero = 2;  // Entre 0 y 4 según el trigger
         int puntosCompetitivo = 40;  // Entre 0 y 100 según el trigger
 

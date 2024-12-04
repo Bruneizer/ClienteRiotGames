@@ -1,3 +1,4 @@
+using System.Linq;
 namespace RiotGames.Test
 {
     public class ServerTests : IDisposable
@@ -21,11 +22,11 @@ namespace RiotGames.Test
         public void ObtenerDetallesServer_DebeRetornarServerConCuentas()
         {
             // Arrange
-            string nombreBase = $"ServidorTest_{Guid.NewGuid()}";
-            string nombre = nombreBase.Length > 45 ? nombreBase.Substring(0, 45) : nombreBase;
+            string nombreBase = $"ServidorTest_as";
+            string nombre = new string(nombreBase.Take(45).ToArray());
 
-            string abreviadoBase = $"STT_{Guid.NewGuid()}";
-            string abreviado = abreviadoBase.Length > 5 ? abreviadoBase.Substring(0, 5) : abreviadoBase;
+            string abreviadoBase = $"STT_1111111111111111111111111";
+            string abreviado = new string(abreviadoBase.Take(5).ToArray());
 
             // Act
             byte serverId = _serverDapper.InsertarServer(nombre, abreviado);
@@ -44,16 +45,16 @@ namespace RiotGames.Test
         public void ActualizarServer_DebeActualizarCorrectamente()
         {
             // Arrange
-            string nombreBase = $"ServidorTest_{Guid.NewGuid()}";
+            string nombreBase = $"ServidorTest_123123";
             string nombre = nombreBase.Length > 45 ? nombreBase.Substring(0, 45) : nombreBase;
 
-            string abreviadoBase = $"STT_{Guid.NewGuid()}";
+            string abreviadoBase = $"STT_123123";
             string abreviado = abreviadoBase.Length > 5 ? abreviadoBase.Substring(0, 5) : abreviadoBase;
 
-            string nombreActualizadoBase = $"ServerActualizado_{Guid.NewGuid()}";
+            string nombreActualizadoBase = $"ServerActualizado_32";
             string nombreActualizado = nombreActualizadoBase.Length > 50 ? nombreActualizadoBase.Substring(0, 50) : nombreActualizadoBase;
 
-            string abreviadoActualizadoBase = $"SAT_{Guid.NewGuid()}";
+            string abreviadoActualizadoBase = $"SAT_32";
             string abreviadoActualizado = abreviadoActualizadoBase.Length > 5 ? abreviadoActualizadoBase.Substring(0, 5) : abreviadoActualizadoBase;
 
             // Act

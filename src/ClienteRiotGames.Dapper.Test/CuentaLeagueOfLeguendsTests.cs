@@ -29,9 +29,9 @@ public class CuentaLeagueOfLeguendsTests : IDisposable
     private void ConfigurarDatosPrueba()
     {
         // Generar valores únicos usando timestamp
-        var timestamp = DateTime.Now.Ticks;
-        string email = $"test{timestamp}@test.com";
-        string nombre = $"TestUser{timestamp}";
+
+        string email = $"test3223@test.com";
+        string nombre = $"TestUser3223";
         string password = "Test123!";
         byte idServer = 1;
 
@@ -59,7 +59,7 @@ public class CuentaLeagueOfLeguendsTests : IDisposable
                 new { 
                     idCuenta = cuentaRiot.IdCuenta, 
                     idRangoL = (byte)1, 
-                    nombre = $"TestLOL{timestamp}", 
+                    nombre = $"TestLOL3223", 
                     nivel = 30, 
                     puntos = 50 
                 }

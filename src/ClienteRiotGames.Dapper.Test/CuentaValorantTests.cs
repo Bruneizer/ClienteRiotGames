@@ -23,7 +23,7 @@ namespace RiotGames.Test
         public void InsertarCuentaValorant_DatosInvalidos_DebeLanzarExcepcion(int experienciaInvalida)
         {
             // Arrange
-            string nombreBase = $"AgenteTest_{Guid.NewGuid()}";
+            string nombreBase = $"AgenteTes_125";
             string nombre = nombreBase.Length > 45 ? nombreBase.Substring(0, 45) : nombreBase;
 
             // Act & Assert
