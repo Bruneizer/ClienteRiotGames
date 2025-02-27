@@ -4,7 +4,7 @@ using ClienteRiotGames.Core;
 
 namespace ClienteRiotGames.Dapper
 {
-    public class RangoVDapper : IRangoVDAO
+    public class RangoVDapper : RangoV
     {
         private readonly IDbConnection _conexion;
 
