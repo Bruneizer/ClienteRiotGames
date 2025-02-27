@@ -35,16 +35,13 @@ namespace ClienteRiotGames.Core
         void InsertarRangoL(string nombre, int numero, int puntosCompetitivo);
         void ActualizarRangoL(byte idRangoL, string nombre, int numero, int puntosCompetitivo);
         void EliminarRangoL(byte idRangoL);
-        RangoL? ObtenerRangoL(byte idRangoL);
-        IEnumerable<RangoL> ObtenerRangosL();
         #endregion
 
         #region RangoV
         void InsertarRangoV(string nombre, int numero, int puntosCompetitivo);
         void ActualizarRangoV(byte idRangoV, string nombre, int numero, int puntosCompetitivo);
         void EliminarRangoV(byte idRangoV);
-        RangoV? ObtenerRangoV(byte idRangoV);
-        IEnumerable<RangoV> ObtenerRangosV();
+
         #endregion
 
         #region Inventario

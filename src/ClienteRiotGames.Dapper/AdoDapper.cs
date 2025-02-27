@@ -203,16 +203,36 @@ namespace ClienteRiotGames.Dapper
 
         public void EliminarRangoL(byte idRangoL)
         {
-            var parametros = new DynamicParameters();
-            parametros.Add("@UnidRangoL", idRangoL);
-            _dbConnection.Execute("EliminarRangoL", parametros, commandType: CommandType.StoredProcedure);
+            if (_dbConnection.State != ConnectionState.Open)
+            {
+                _dbConnection.Open();
+            }
+
+            using (var transaction = _dbConnection.BeginTransaction())
+            {
+                try
+                {
+                    // Update dependent records in CuentaLeagueOfLeguends to remove the foreign key reference
+                    var updateParams = new DynamicParameters();
+                    updateParams.Add("@UnidRangoL", idRangoL);
+                    _dbConnection.Execute("UPDATE CuentaLeagueOfLeguends SET idRangoL = NULL WHERE idRangoL = @UnidRangoL", updateParams, transaction);
+
+                    // Now delete the RangoL record
+                    var deleteParams = new DynamicParameters();
+                    deleteParams.Add("@UnidRangoL", idRangoL);
+                    _dbConnection.Execute("EliminarRangoL", deleteParams, transaction, commandType: CommandType.StoredProcedure);
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
         }
 
-        public RangoL? ObtenerRangoL(byte idRangoL)
-            => _dbConnection.QueryFirstOrDefault<RangoL>("ObtenerRangoL", new { UnidRangoL = idRangoL }, commandType: CommandType.StoredProcedure);
-
-        public IEnumerable<RangoL> ObtenerRangosL()
-            => _dbConnection.Query<RangoL>("SELECT * FROM RangoL");
+    
 
         #endregion
 
@@ -244,11 +264,6 @@ namespace ClienteRiotGames.Dapper
             _dbConnection.Execute("EliminarRangoV", parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public RangoV? ObtenerRangoV(byte idRangoV)
-            => _dbConnection.QueryFirstOrDefault<RangoV>("ObtenerRangoV", new { UnidRangoV = idRangoV }, commandType: CommandType.StoredProcedure);
-
-        public IEnumerable<RangoV> ObtenerRangosV()
-            => _dbConnection.Query<RangoV>("SELECT * FROM RangoV");
 
         #endregion
 

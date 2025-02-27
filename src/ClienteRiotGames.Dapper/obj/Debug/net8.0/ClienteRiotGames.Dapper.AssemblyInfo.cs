@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClienteRiotGames.Dapper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fb65fd6c884d93f58ca2defd2547c8cd1bace8d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16c77fe3c2f65fc929b691cf77377cb969b06d47")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClienteRiotGames.Dapper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClienteRiotGames.Dapper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

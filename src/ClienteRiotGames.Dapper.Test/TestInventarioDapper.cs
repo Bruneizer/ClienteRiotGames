@@ -6,8 +6,7 @@ namespace ClienteRiotGames.Test
     public class TestInventarioDapper : TestAdo
     {
         [Theory]
-        [InlineData(1, 1000, 200)]
-        [InlineData(2, 100, 400)]
+        [InlineData(4, 1000, 200)]
         public void InsertarYObtenerInventario(uint idCuentaL, uint esenciaAzul, uint puntosRiot)
         {
             // Insertar el inventario

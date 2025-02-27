@@ -6179,11 +6179,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\ClienteRiotGames.Dapper.Test.csproj",
+      "projectUniqueName": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\ClienteRiotGames.Dapper.Test.csproj",
       "projectName": "ClienteRiotGames.Dapper.Test",
-      "projectPath": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\ClienteRiotGames.Dapper.Test.csproj",
+      "projectPath": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\ClienteRiotGames.Dapper.Test.csproj",
       "packagesPath": "C:\\Users\\Lore\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\obj\\",
+      "outputPath": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lore\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -6198,11 +6198,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {
-              "projectPath": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj"
+            "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {
+              "projectPath": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj"
             },
-            "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\ClienteRiotGames.Dapper.csproj": {
-              "projectPath": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\ClienteRiotGames.Dapper.csproj"
+            "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\ClienteRiotGames.Dapper.csproj": {
+              "projectPath": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\ClienteRiotGames.Dapper.csproj"
             }
           }
         }

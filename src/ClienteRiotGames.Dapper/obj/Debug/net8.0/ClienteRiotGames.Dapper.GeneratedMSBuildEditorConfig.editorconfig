@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ClienteRiotGames.Dapper
-build_property.ProjectDir = C:\Users\Lore\Documents\GitHub\ClienteRiotGames\src\ClienteRiotGames.Dapper\
+build_property.ProjectDir = C:\Users\Lore\Documents\nc\ClienteRiotGames\src\ClienteRiotGames.Dapper\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

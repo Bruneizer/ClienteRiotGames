@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {}
+    "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {
+    "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
+        "projectUniqueName": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
         "projectName": "ClienteRiotGames.Core",
-        "projectPath": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
+        "projectPath": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
         "packagesPath": "C:\\Users\\Lore\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lore\\Documents\\GitHub\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\obj\\",
+        "outputPath": "C:\\Users\\Lore\\Documents\\nc\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lore\\AppData\\Roaming\\NuGet\\NuGet.Config"

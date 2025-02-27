@@ -607,4 +607,21 @@ BEGIN
     WHERE idInventario = UnidInventario AND idObjeto = UnidObjeto;
 END $$
 
-DELIMITER ; 
+DELIMITER $$
+
+
+CREATE PROCEDURE ObtenerRangoL(
+    IN UnidRangoL INT
+)
+BEGIN
+    SELECT * FROM RangoL WHERE idRangoL = UnidRangoL;
+END $$
+
+CREATE PROCEDURE ObtenerRangoV(
+    IN UnidRangoV INT
+)
+BEGIN
+    SELECT * FROM RangoV WHERE idRangoV = UnidRangoV;
+END $$
+
+DELIMITER ;
