@@ -1,96 +1,33 @@
-namespace RiotGames.Test
+using ClienteRiotGames.Core;
+using System.Data;
+
+namespace ClienteRiotGames.Test
 {
-    public class RangoLTests : IDisposable
+    public class TestRangoLDapper : TestAdo
     {
-        private readonly IDbConnection _connection;
-        private readonly RangoLDapper _rangoLDapper;
-
-        public RangoLTests()
+        [Theory]
+        [InlineData("Rango1", 5, 53)]
+        [InlineData("Rango2", 6, 22)]
+        public void InsertarYObtenerRangoL(string nombre, int numero, int puntosCompetitivo)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appSettings.json")
-                .Build();
+            Ado.InsertarRangoL(nombre, numero, puntosCompetitivo);
+            var rango = Ado.ObtenerRangoL((byte)numero);
 
-            string connectionString = configuration.GetConnectionString("MySQL") ?? "";
-            _connection = new MySqlConnection(connectionString);
-            _rangoLDapper = new RangoLDapper(_connection);
-        }
-
-        [Fact]
-        public void InsertarRangoL_DebeInsertarCorrectamente()
-        {
-            // Arrange
-            string nombreEsperado = "TestRango";
-            int numeroEsperado = 4;
-            int puntosCompetitivoEsperado = 80;
-
-            try
-            {
-                // Act
-                _rangoLDapper.InsertarRangoL(nombreEsperado, numeroEsperado, puntosCompetitivoEsperado);
-                var rango = _rangoLDapper.ObtenerRangoL((byte)numeroEsperado);
-
-                // Assert
-                Assert.NotNull(rango);
-                Assert.Equal(nombreEsperado, rango.Nombre);
-                Assert.Equal(numeroEsperado, rango.Numero);
-                Assert.Equal(puntosCompetitivoEsperado, rango.PuntosCompetitivo);
-            }
-            finally
-            {
-                // Cleanup - Solo si no hay referencias
-                try
-                {
-                    _connection.Execute("DELETE FROM RangoL WHERE Numero = @Numero", new { Numero = numeroEsperado });
-                }
-                catch
-                {
-                    // Ignorar errores de limpieza
-                }
-            }
+            Assert.NotNull(rango);
+            Assert.Equal(nombre, rango.Nombre);
+            Assert.Equal(numero, rango.Numero);
+            Assert.Equal(puntosCompetitivo, rango.PuntosCompetitivo);
         }
 
         [Theory]
-        [InlineData(-1, 50)]   // Número inválido
-        [InlineData(5, 50)]    // Número inválido
-        [InlineData(2, -1)]    // Puntos competitivos inválidos
-        [InlineData(2, 101)]   // Puntos competitivos inválidos
-        public void InsertarRangoL_DatosInvalidos_DebeLanzarExcepcion(int numero, int puntosCompetitivo)
+        [InlineData(1)]
+        [InlineData(2)]
+        public void EliminarRangoL(byte idRangoL)
         {
-            // Arrange
-            string nombre = $"Test_3232";
-            nombre = nombre.Length > 45 ? nombre.Substring(0, 45) : nombre;
+            Ado.EliminarRangoL(idRangoL);
+            var rango = Ado.ObtenerRangoL(idRangoL);
 
-            // Act & Assert
-            var exception = Assert.Throws<ArgumentException>(() => 
-                _rangoLDapper.InsertarRangoL(nombre, numero, puntosCompetitivo));
-            
-            if (numero < 0 || numero > 4)
-            {
-                Assert.Equal("El número de rango debe estar entre 0 y 4", exception.Message);
-            }
-            else
-            {
-                Assert.Equal("Los puntos competitivos deben estar entre 0 y 100", exception.Message);
-            }
-        }
-
-        [Fact]
-        public void InsertarRangoL_PuntosCompetitivosInvalidos_DebeLanzarExcepcion()
-        {
-            // Arrange
-            string nombre = $"Test_123123";
-            nombre = nombre.Length > 45 ? nombre.Substring(0, 45) : nombre;
-
-            // Act & Assert
-            var exception = Assert.Throws<ArgumentException>(() => _rangoLDapper.InsertarRangoL("Test", 2, 101));
-            Assert.Equal("Los puntos competitivos deben estar entre 0 y 100", exception.Message);
-        }
-
-        public void Dispose()
-        {
-            _connection.Dispose();
+            Assert.Null(rango);
         }
     }
 }

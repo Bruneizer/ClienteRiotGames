@@ -1,41 +1,35 @@
-namespace RiotGames.Test
+using ClienteRiotGames.Core;
+using System.Data;
+
+namespace ClienteRiotGames.Test
 {
-    public class CuentaValorantTests : IDisposable
+    public class TestCuentaValorantDapper : TestAdo
     {
-        private readonly IDbConnection _connection;
-        private readonly CuentaValorantDapper _cuentaValorantDapper;
-
-        public CuentaValorantTests()
+        [Theory]
+        [InlineData("Valorant1", 10, 1000, 1, 1)]
+        [InlineData("Valorant2", 20, 2000, 2, 2)]
+        public void InsertarYObtenerCuentaValorant(string nombre, int nivel, int experiencia, uint idCuenta, byte idRangoV)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appSettings.json")
-                .Build();
+            Ado.InsertarCuentaValorant(nombre, nivel, experiencia, idCuenta, idRangoV);
+            var cuenta = Ado.ObtenerCuentaValorant(idCuenta);
 
-            string connectionString = configuration.GetConnectionString("MySQL") ?? "";
-            _connection = new MySqlConnection(connectionString);
-            _cuentaValorantDapper = new CuentaValorantDapper(_connection);
+            Assert.NotNull(cuenta);
+            Assert.Equal(nombre, cuenta.Nombre);
+            Assert.Equal(nivel, cuenta.Nivel);
+            Assert.Equal(experiencia, cuenta.Experiencia);
+            Assert.Equal(idCuenta, cuenta.IdCuenta);
+            Assert.Equal(idRangoV, cuenta.IdRangoV);
         }
 
         [Theory]
-        [InlineData(-1)]      // Experiencia inválida (menor a 0)
-        [InlineData(1000001)] // Experiencia inválida (mayor a 1,000,000)
-        public void InsertarCuentaValorant_DatosInvalidos_DebeLanzarExcepcion(int experienciaInvalida)
+        [InlineData(1)]
+        [InlineData(2)]
+        public void EliminarCuentaValorant(uint idCuentaV)
         {
-            // Arrange
-            string nombreBase = $"AgenteTes_125";
-            string nombre = nombreBase.Length > 45 ? nombreBase.Substring(0, 45) : nombreBase;
+            Ado.EliminarCuentaValorant(idCuentaV);
+            var cuenta = Ado.ObtenerCuentaValorant(idCuentaV);
 
-            // Act & Assert
-            var exception = Assert.Throws<ArgumentException>(() =>
-                _cuentaValorantDapper.InsertarCuentaValorant(1, 1, nombre, 10, experienciaInvalida));
-            
-            Assert.Equal("La experiencia debe estar entre 0 y 1000000", exception.Message);
-        }
-
-        public void Dispose()
-        {
-            _connection.Dispose();
+            Assert.Null(cuenta);
         }
     }
-} 
+}

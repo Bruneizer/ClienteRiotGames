@@ -1,42 +1,32 @@
-namespace RiotGames.Test;
+using ClienteRiotGames.Core;
+using System.Data;
 
-public class InventarioTests : IDisposable
+namespace ClienteRiotGames.Test
 {
-    private readonly IDbConnection _connection;
-    private readonly InventarioDapper _inventarioDapper;
-
-    public InventarioTests()
+    public class TestInventarioDapper : TestAdo
     {
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appSettings.json")
-            .Build();
+        [Theory]
+        [InlineData(1, 1000, 200)]
+        [InlineData(2, 2000, 400)]
+        public void InsertarYObtenerInventario(uint idCuentaL, uint esenciaAzul, uint puntosRiot)
+        {
+            Ado.InsertarInventario(idCuentaL, esenciaAzul, puntosRiot);
+            var inventario = Ado.ObtenerInventario(idCuentaL);
 
-        string connectionString = configuration.GetConnectionString("MySQL") ?? "";
-        _connection = new MySqlConnection(connectionString);
-        _inventarioDapper = new InventarioDapper(_connection);
+            Assert.NotNull(inventario);
+            Assert.Equal(esenciaAzul, inventario.EsenciaAzul);
+            Assert.Equal(puntosRiot, inventario.PuntosRiot);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void EliminarInventario(uint idInventario)
+        {
+            Ado.EliminarInventario(idInventario);
+            var inventario = Ado.ObtenerInventario(idInventario);
+
+            Assert.Null(inventario);
+        }
     }
-
-    [Fact]
-    public void InsertarInventario_DebeInsertarCorrectamente()
-    {
-        // Arrange
-        uint idCuentaL = 1;
-        uint esenciaAzul = 5000;
-        uint puntosRiot = 1000;
-
-        // Act
-        _inventarioDapper.InsertarInventario(idCuentaL, esenciaAzul, puntosRiot);
-        var inventario = _inventarioDapper.ObtenerInventarioPorIdCuenta(idCuentaL);
-
-        // Assert
-        Assert.NotNull(inventario);
-        Assert.Equal(esenciaAzul, inventario.EsenciaAzul);
-        Assert.Equal(puntosRiot, inventario.PuntosRiot);
-    }
-
-    public void Dispose()
-    {
-        _connection.Dispose();
-    }
-} 
+}

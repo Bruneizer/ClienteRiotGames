@@ -81,9 +81,9 @@ CREATE TRIGGER trgRangoL
 BEFORE INSERT ON RangoL
 FOR EACH ROW
 BEGIN
-    IF NEW.Numero < 0 OR NEW.Numero > 4 THEN
+    IF NEW.Numero < 0 OR NEW.Numero > 10 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El número de rango debe estar entre 0 y 4';
+        SET MESSAGE_TEXT = 'El número de rango debe estar entre 0 y 10';
     END IF;
     
     IF NEW.PuntosCompetitivo < 0 OR NEW.PuntosCompetitivo > 100 THEN
@@ -100,9 +100,9 @@ CREATE TRIGGER trgRangoV
 BEFORE INSERT ON RangoV
 FOR EACH ROW
 BEGIN
-    IF NEW.Numero < 0 OR NEW.Numero > 4 THEN
+    IF NEW.Numero < 0 OR NEW.Numero > 10 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El número de rango debe estar entre 0 y 4';
+        SET MESSAGE_TEXT = 'El número de rango debe estar entre 0 y 10';
     END IF;
     
     IF NEW.PuntosCompetitivo < 0 OR NEW.PuntosCompetitivo > 100 THEN

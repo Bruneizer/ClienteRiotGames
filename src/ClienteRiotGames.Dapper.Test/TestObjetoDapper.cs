@@ -1,43 +1,33 @@
-namespace RiotGames.Test;
+using ClienteRiotGames.Core;
+using System.Data;
 
-public class ObjetoTests : IDisposable
+namespace ClienteRiotGames.Test
 {
-    private readonly IDbConnection _connection;
-    private readonly ObjetoDapper _objetoDapper;
-    private readonly TipoObjetoDapper _tipoObjetoDapper;
-
-    public ObjetoTests()
+    public class TestObjetoDapper : TestAdo
     {
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appSettings.json")
-            .Build();
+        [Theory]
+        [InlineData(1, "Objeto1", 100, 200)]
+        [InlineData(2, "Objeto2", 200, 400)]
+        public void InsertarYObtenerObjeto(int idTipoObjeto, string nombre, uint precioEA, uint precioRP)
+        {
+            Ado.InsertarObjeto(idTipoObjeto, nombre, precioEA, precioRP);
+            var objeto = Ado.ObtenerObjeto(idTipoObjeto);
 
-        string connectionString = configuration.GetConnectionString("MySQL") ?? "";
-        _connection = new MySqlConnection(connectionString);
-        _objetoDapper = new ObjetoDapper(_connection);
-        _tipoObjetoDapper = new TipoObjetoDapper(_connection);
-    }
+            Assert.NotNull(objeto);
+            Assert.Equal(nombre, objeto.Nombre);
+            Assert.Equal(precioEA, objeto.PrecioEA);
+            Assert.Equal(precioRP, objeto.PrecioRP);
+        }
 
-    [Fact]
-    public void ActualizarObjeto_DebeActualizarCorrectamente()
-    {
-        // Arrange
-        uint idObjeto = 1;
-        string nombre = "NuevoObjeto";
-        uint precioEA = 4800;
-        uint precioRP = 880;
-        uint idTipoObjeto = 1; // Asegúrate de que este ID existe en la tabla TipoObjeto
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        public void EliminarObjeto(int idObjeto)
+        {
+            Ado.EliminarObjeto(idObjeto);
+            var objeto = Ado.ObtenerObjeto(idObjeto);
 
-        // Act
-        _objetoDapper.ActualizarObjeto(idObjeto, nombre, precioEA, precioRP, idTipoObjeto);
-
-        // Assert
-        // Verifica que el objeto se ha actualizado correctamente
-    }
-
-    public void Dispose()
-    {
-        _connection.Dispose();
+            Assert.Null(objeto);
+        }
     }
 }
