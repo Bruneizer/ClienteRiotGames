@@ -1,71 +1,59 @@
 using System.Data;
 using Dapper;
+using MySqlConnector;
 using ClienteRiotGames.Core;
 
-namespace ClienteRiotGames.Dapper;
-
-public class ObjetoDapper
+namespace ClienteRiotGames.Dapper
 {
-    private readonly IDbConnection _connection;
-    
-    public ObjetoDapper(IDbConnection connection)
+    public class ObjetoDapper : IObjetoDAO
     {
-        _connection = connection;
-    }
+        private readonly IDbConnection _conexion;
 
-    public void InsertarObjeto(uint idTipoObjeto, string nombre, uint precioEA, uint precioRP)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidTipoObjeto", idTipoObjeto);
-        parameters.Add("@UnNombre", nombre);
-        parameters.Add("@UnPrecioEA", precioEA);
-        parameters.Add("@UnPrecioRP", precioRP);
-        
-        _connection.Execute("InsertarObjeto", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public ObjetoDapper(IDbConnection conexion) => this._conexion = conexion;
 
-    public void ActualizarObjeto(uint idObjeto, string nombre, uint precioEA, uint precioRP, uint idTipoObjeto)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidObjeto", idObjeto);
-        parameters.Add("@UnNombre", nombre);
-        parameters.Add("@UnPrecioEA", precioEA);
-        parameters.Add("@UnPrecioRP", precioRP);
-        parameters.Add("@UnidTipoObjeto", idTipoObjeto);
-        
-        _connection.Execute("ActualizarObjeto", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public void InsertarObjeto(int idTipoObjeto, string nombre, int precioEA, int precioRP)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdTipoObjeto", idTipoObjeto);
+            parametros.Add("@unNombre", nombre);
+            parametros.Add("@unPrecioEA", precioEA);
+            parametros.Add("@unPrecioRP", precioRP);
 
-    public void EliminarObjeto(uint idObjeto)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidObjeto", idObjeto);
-        
-        _connection.Execute("EliminarObjeto", parameters, commandType: CommandType.StoredProcedure);
-    }
+            _conexion.Execute("InsertarObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public Objeto? ObtenerObjeto(uint idObjeto)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidObjeto", idObjeto);
-        
-        return _connection.QueryFirstOrDefault<Objeto>(
-            "SELECT * FROM Objeto WHERE idObjeto = @UnidObjeto",
-            parameters);
-    }
+        public void ActualizarObjeto(int idObjeto, string nombre, int precioEA, int precioRP, int idTipoObjeto)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdObjeto", idObjeto);
+            parametros.Add("@unNombre", nombre);
+            parametros.Add("@unPrecioEA", precioEA);
+            parametros.Add("@unPrecioRP", precioRP);
+            parametros.Add("@unIdTipoObjeto", idTipoObjeto);
 
-    public IEnumerable<Objeto> ObtenerObjetos()
-    {
-        return _connection.Query<Objeto>("ObtenerObjetos", commandType: CommandType.StoredProcedure);
-    }
+            _conexion.Execute("ActualizarObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public Objeto? ObtenerObjetoPorNombre(string nombre)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnNombre", nombre);
-        
-        return _connection.QueryFirstOrDefault<Objeto>(
-            "SELECT * FROM Objeto WHERE Nombre = @UnNombre",
-            parameters);
+        public void EliminarObjeto(int idObjeto)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdObjeto", idObjeto);
+
+            _conexion.Execute("EliminarObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public Objeto? ObtenerObjeto(int idObjeto)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdObjeto", idObjeto);
+
+            return _conexion.QueryFirstOrDefault<Objeto>("ObtenerDetallesObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<Objeto> ObtenerObjetos()
+        {
+            const string query = "SELECT * FROM Objeto";
+            return _conexion.Query<Objeto>(query).ToList();
+        }
     }
-} 
+}

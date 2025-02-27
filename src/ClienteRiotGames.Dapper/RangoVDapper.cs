@@ -2,68 +2,55 @@ using System.Data;
 using Dapper;
 using ClienteRiotGames.Core;
 
-namespace ClienteRiotGames.Dapper;
-
-public class RangoVDapper
+namespace ClienteRiotGames.Dapper
 {
-    private readonly IDbConnection _connection;
-
-    public RangoVDapper(IDbConnection connection)
+    public class RangoVDapper : IRangoVDAO
     {
-        _connection = connection;
-    }
+        private readonly IDbConnection _conexion;
 
-    public void InsertarRangoV(string nombre, int numero, int puntosCompetitivo)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnNombre", nombre);
-        parameters.Add("@UnNumero", numero);
-        parameters.Add("@UnPuntosCompetitivo", puntosCompetitivo);
-        
-        _connection.Execute("InsertarRangoV", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public RangoVDapper(IDbConnection conexion) => this._conexion = conexion;
 
-    public RangoV? ObtenerRangoVPorNombre(string nombre)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnNombre", nombre);
-        
-        return _connection.QueryFirstOrDefault<RangoV>(
-            "SELECT * FROM RangoV WHERE Nombre = @UnNombre",
-            parameters);
-    }
+        public void InsertarRangoV(string nombre, int numero, int puntosCompetitivo)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unNombre", nombre);
+            parametros.Add("@unNumero", numero);
+            parametros.Add("@unPuntosCompetitivo", puntosCompetitivo);
 
-    public void ActualizarRangoV(byte idRangoV, string nombre, int numero, int puntosCompetitivo)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidRangoV", idRangoV);
-        parameters.Add("@UnNombre", nombre);
-        parameters.Add("@UnNumero", numero);
-        parameters.Add("@UnPuntosCompetitivo", puntosCompetitivo);
-        
-        _connection.Execute("ActualizarRangoV", parameters, commandType: CommandType.StoredProcedure);
-    }
+            _conexion.Execute("InsertarRangoV", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public void EliminarRangoV(byte idRangoV)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidRangoV", idRangoV);
-        
-        _connection.Execute("EliminarRangoV", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public void ActualizarRangoV(byte idRangoV, string nombre, int numero, int puntosCompetitivo)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdRangoV", idRangoV);
+            parametros.Add("@unNombre", nombre);
+            parametros.Add("@unNumero", numero);
+            parametros.Add("@unPuntosCompetitivo", puntosCompetitivo);
 
-    public RangoV? ObtenerRangoV(byte idRangoV)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidRangoV", idRangoV);
-        
-        return _connection.QueryFirstOrDefault<RangoV>(
-            "SELECT * FROM RangoV WHERE idRangoV = @UnidRangoV",
-            parameters);
-    }
+            _conexion.Execute("ActualizarRangoV", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public IEnumerable<RangoV> ObtenerRangosV()
-    {
-        return _connection.Query<RangoV>("ObtenerRangosV", commandType: CommandType.StoredProcedure);
+        public void EliminarRangoV(byte idRangoV)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdRangoV", idRangoV);
+
+            _conexion.Execute("EliminarRangoV", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public RangoV? ObtenerRangoV(byte idRangoV)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdRangoV", idRangoV);
+
+            return _conexion.QueryFirstOrDefault<RangoV>("ObtenerDetallesRangoV", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<RangoV> ObtenerRangosV()
+        {
+            const string query = "SELECT * FROM RangoV";
+            return _conexion.Query<RangoV>(query).ToList();
+        }
     }
-} 
+}

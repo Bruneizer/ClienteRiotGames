@@ -1,46 +1,53 @@
 using System.Data;
 using Dapper;
+using MySqlConnector;
 using ClienteRiotGames.Core;
 
-namespace ClienteRiotGames.Dapper;
-
-public class TipoObjetoDapper
+namespace ClienteRiotGames.Dapper
 {
-    private readonly IDbConnection _connection;
-
-    public TipoObjetoDapper(IDbConnection connection)
+    public class TipoObjetoDapper : ITipoObjetoDAO
     {
-        _connection = connection;
-    }
+        private readonly IDbConnection _conexion;
 
-    public void InsertarTipoObjeto(string nombre)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnNombre", nombre);
-        
-        _connection.Execute("InsertarTipoObjeto", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public TipoObjetoDapper(IDbConnection conexion) => this._conexion = conexion;
 
-    public TipoObjeto? ObtenerTipoObjeto(uint idTipoObjeto)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidTipoObjeto", idTipoObjeto);
-        
-        return _connection.QueryFirstOrDefault<TipoObjeto>(
-            "SELECT * FROM TipoObjeto WHERE IdTipoObjeto = @UnidTipoObjeto",
-            parameters);
-    }
+        public void InsertarTipoObjeto(string nombre)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unNombre", nombre);
 
-    public IEnumerable<TipoObjeto> ObtenerTiposObjeto()
-    {
-        return _connection.Query<TipoObjeto>("SELECT * FROM TipoObjeto");
-    }
+            _conexion.Execute("InsertarTipoObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public void EliminarTipoObjeto(uint idTipoObjeto)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidTipoObjeto", idTipoObjeto);
-        
-        _connection.Execute("EliminarTipoObjeto", parameters, commandType: CommandType.StoredProcedure);
+        public void ActualizarTipoObjeto(int idTipoObjeto, string nombre)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdTipoObjeto", idTipoObjeto);
+            parametros.Add("@unNombre", nombre);
+
+            _conexion.Execute("ActualizarTipoObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public void EliminarTipoObjeto(int idTipoObjeto)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdTipoObjeto", idTipoObjeto);
+
+            _conexion.Execute("EliminarTipoObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public TipoObjeto? ObtenerTipoObjeto(int idTipoObjeto)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdTipoObjeto", idTipoObjeto);
+
+            return _conexion.QueryFirstOrDefault<TipoObjeto>("ObtenerDetallesTipoObjeto", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<TipoObjeto> ObtenerTiposObjeto()
+        {
+            const string query = "SELECT * FROM TipoObjeto";
+            return _conexion.Query<TipoObjeto>(query).ToList();
+        }
     }
-} 
+}

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "o0wTvqJ/Bv4BRYLrIRwOaNXG8PnCL+A7ZwWoSsRAxT4J03RaeRZiAZbsptfZe2/Lih5k8Evj9UmjP5XsjRW2Pg==",
+  "dgSpecHash": "DiqsimUzrpQ=",
   "success": true,
-  "projectFilePath": "/mnt/Datos/ClienteRiotGames/src/ClienteRiotGames.Core/ClienteRiotGames.Core.csproj",
+  "projectFilePath": "C:\\Users\\armoa\\Desktop\\Proyectos\\Escuela\\Repositorios\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

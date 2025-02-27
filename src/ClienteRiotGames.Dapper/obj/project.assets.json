@@ -101,19 +101,24 @@
     ]
   },
   "packageFolders": {
-    "/home/et12alumno/.nuget/packages/": {}
+    "C:\\Users\\armoa\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/Datos/ClienteRiotGames/src/ClienteRiotGames.Dapper/ClienteRiotGames.Dapper.csproj",
+      "projectUniqueName": "C:\\Users\\armoa\\Desktop\\Proyectos\\Escuela\\Repositorios\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\ClienteRiotGames.Dapper.csproj",
       "projectName": "ClienteRiotGames.Dapper",
-      "projectPath": "/mnt/Datos/ClienteRiotGames/src/ClienteRiotGames.Dapper/ClienteRiotGames.Dapper.csproj",
-      "packagesPath": "/home/et12alumno/.nuget/packages/",
-      "outputPath": "/mnt/Datos/ClienteRiotGames/src/ClienteRiotGames.Dapper/obj/",
+      "projectPath": "C:\\Users\\armoa\\Desktop\\Proyectos\\Escuela\\Repositorios\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\ClienteRiotGames.Dapper.csproj",
+      "packagesPath": "C:\\Users\\armoa\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\armoa\\Desktop\\Proyectos\\Escuela\\Repositorios\\ClienteRiotGames\\src\\ClienteRiotGames.Dapper\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/home/et12alumno/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\armoa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -125,8 +130,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/mnt/Datos/ClienteRiotGames/src/ClienteRiotGames.Core/ClienteRiotGames.Core.csproj": {
-              "projectPath": "/mnt/Datos/ClienteRiotGames/src/ClienteRiotGames.Core/ClienteRiotGames.Core.csproj"
+            "C:\\Users\\armoa\\Desktop\\Proyectos\\Escuela\\Repositorios\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj": {
+              "projectPath": "C:\\Users\\armoa\\Desktop\\Proyectos\\Escuela\\Repositorios\\ClienteRiotGames\\src\\ClienteRiotGames.Core\\ClienteRiotGames.Core.csproj"
             }
           }
         }
@@ -135,6 +140,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -166,7 +176,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.107/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,105 +1,61 @@
 using System.Data;
 using Dapper;
+using MySqlConnector;
 using ClienteRiotGames.Core;
 
 namespace ClienteRiotGames.Dapper;
-
-public class ServerDapper
+public class AdoDapper : IAdo
 {
-    private readonly IDbConnection _connection;
+    private readonly IDbConnection _conexion;
 
-    public ServerDapper(IDbConnection connection)
+    public AdoDapper(IDbConnection conexion) => this._conexion = conexion;
+    public AdoDapper(string cadena) => _conexion = new MySqlConnection(cadena);
+
+    #region Server
+    
+    public void InsertarServer(string nombre, string abreviado)
     {
-        _connection = connection;
-    }
-
-    public byte InsertarServer(string nombre, string abreviado)
-    {
-        // Verificar si ya existe un servidor con ese nombre
-        var existingServer = _connection.QueryFirstOrDefault<Server>(
-            "SELECT * FROM Server WHERE Nombre = @Nombre",
-            new { Nombre = nombre });
-
-        if (existingServer != null)
-        {
-            return existingServer.IdServer; // Retornamos el ID del servidor existente
-        }
-
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnNombre", nombre);
-        parameters.Add("@UnAbreviado", abreviado);
-        
-        _connection.Execute("InsertarServer", parameters, commandType: CommandType.StoredProcedure);
-        
-        // Obtener el ID del servidor recién insertado
-        var newServer = _connection.QueryFirstOrDefault<Server>(
-            "SELECT * FROM Server WHERE Nombre = @Nombre",
-            new { Nombre = nombre });
-            
-        return newServer?.IdServer ?? 0;
-    }
-
-    public Server ObtenerDetallesServer(byte serverId)
-    {
-        string sql = "SELECT IdServer, Nombre, Abreviado FROM Server WHERE IdServer = @IdServer";
-        return _connection.QuerySingleOrDefault<Server>(sql, new { IdServer = serverId });
+        var parametros = new DynamicParameters();
+        parametros.Add("@UnNombre", nombre);
+        parametros.Add("@UnAbreviado", abreviado);
+        _conexion.Execute("InsertarServer", parametros, commandType: CommandType.StoredProcedure);
     }
 
     public int ObtenerServerId(string nombre)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnNombre", nombre);
-        
-        return _connection.QuerySingle<int>("SELECT idServer FROM Server WHERE Nombre = @UnNombre", parameters);
-    }
-
-    public void EliminarServer(byte idServer)
-    {
-        string sql = "CALL EliminarServer(@IdServer)";
-        _connection.Execute(sql, new { IdServer = idServer });
-    }
+        => _conexion.QuerySingle<int>("SELECT idServer FROM Server WHERE Nombre = @Nombre", new { Nombre = nombre });
 
     public void ActualizarServer(int idServer, string nombre, string abreviado)
     {
-        if (nombre.Length > 45) nombre = nombre.Substring(0, 45);
-        if (abreviado.Length > 5) abreviado = abreviado.Substring(0, 5);
-
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidServer", idServer);
-        parameters.Add("@UnNombre", nombre);
-        parameters.Add("@UnAbreviado", abreviado);
-        
-        _connection.Execute("ActualizarServer", parameters, commandType: CommandType.StoredProcedure);
+        var parametros = new DynamicParameters();
+        parametros.Add("@UnidServer", idServer);
+        parametros.Add("@UnNombre", nombre);
+        parametros.Add("@UnAbreviado", abreviado);
+        _conexion.Execute("ActualizarServer", parametros, commandType: CommandType.StoredProcedure);
     }
 
     public void EliminarServer(int idServer)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidServer", idServer);
-        
-        _connection.Execute("EliminarServer", parameters, commandType: CommandType.StoredProcedure);
-    }
+        => _conexion.Execute("EliminarServer", new { UnidServer = idServer }, commandType: CommandType.StoredProcedure);
 
-    public Server ObtenerServer(int idServer)
-    {
-        var server = _connection.QueryFirstOrDefault<Server>(
-            "ObtenerDetallesServer", 
-            new { UnidServer = idServer }, 
-            commandType: CommandType.StoredProcedure);
-
-        return server ?? throw new InvalidOperationException("Servidor no encontrado.");
-    }
+    public Server? ObtenerServer(int idServer)
+        => _conexion.QueryFirstOrDefault<Server>("ObtenerServer", new { UnidServer = idServer }, commandType: CommandType.StoredProcedure);
 
     public IEnumerable<Server> ObtenerServers()
-    {
-        return _connection.Query<Server>("SELECT * FROM Server");
-    }
+        => _conexion.Query<Server>("SELECT * FROM Server");
 
     public Server? ObtenerDetallesServer(int idServer)
     {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidServer", idServer);
-        
-        return _connection.QueryFirstOrDefault<Server>("ObtenerDetallesServer", parameters, commandType: CommandType.StoredProcedure);
+        return _conexion.Query<Server, int, Server>(
+            "ObtenerDetallesServer",
+            (server, totalCuentas) =>
+            {
+                server.CuentasRiot = new List<CuentaRiot>(totalCuentas);
+                return server;
+            },
+            new { UnidServer = idServer },
+            splitOn: "TotalCuentas",
+            commandType: CommandType.StoredProcedure
+        ).FirstOrDefault();
     }
-} 
+    
+    #endregion
+}

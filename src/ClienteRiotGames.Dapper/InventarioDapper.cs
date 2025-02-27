@@ -1,62 +1,56 @@
 using System.Data;
 using Dapper;
+using MySqlConnector;
 using ClienteRiotGames.Core;
 
-namespace ClienteRiotGames.Dapper;
-
-public class InventarioDapper
+namespace ClienteRiotGames.Dapper
 {
-    private readonly IDbConnection _connection;
-
-    public InventarioDapper(IDbConnection connection)
+    public class InventarioDapper : IInventarioDAO
     {
-        _connection = connection;
-    }
+        private readonly IDbConnection _conexion;
 
-    public void InsertarInventario(uint idCuentaL, uint esenciaAzul, uint puntosRiot)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidCuentaL", idCuentaL);
-        parameters.Add("@UnEsenciaAzul", esenciaAzul);
-        parameters.Add("@UnPuntosRiot", puntosRiot);
-        
-        _connection.Execute("InsertarInventario", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public InventarioDapper(IDbConnection conexion) => this._conexion = conexion;
 
-    public void ActualizarInventario(uint idInventario, uint esenciaAzul, uint puntosRiot)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidInventario", idInventario);
-        parameters.Add("@UnEsenciaAzul", esenciaAzul);
-        parameters.Add("@UnPuntosRiot", puntosRiot);
-        
-        _connection.Execute("ActualizarInventario", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public void InsertarInventario(uint idCuentaL, uint esenciaAzul, uint puntosRiot)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdCuentaL", idCuentaL);
+            parametros.Add("@unEsenciaAzul", esenciaAzul);
+            parametros.Add("@unPuntosRiot", puntosRiot);
 
-    public void EliminarInventario(uint idInventario)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidInventario", idInventario);
-        
-        _connection.Execute("EliminarInventario", parameters, commandType: CommandType.StoredProcedure);
-    }
+            _conexion.Execute("InsertarInventario", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public Inventario? ObtenerInventario(uint idInventario)
-    {
-        var parameters = new DynamicParameters();
-        parameters.Add("@UnidInventario", idInventario);
-        
-        return _connection.QueryFirstOrDefault<Inventario>("ObtenerInventario", parameters, commandType: CommandType.StoredProcedure);
-    }
+        public void ActualizarInventario(uint idInventario, uint esenciaAzul, uint puntosRiot)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdInventario", idInventario);
+            parametros.Add("@unEsenciaAzul", esenciaAzul);
+            parametros.Add("@unPuntosRiot", puntosRiot);
 
-    public IEnumerable<Inventario> ObtenerInventarios()
-    {
-        return _connection.Query<Inventario>("ObtenerInventarios", commandType: CommandType.StoredProcedure);
-    }
+            _conexion.Execute("ActualizarPuntosInventario", parametros, commandType: CommandType.StoredProcedure);
+        }
 
-    public Inventario ObtenerInventarioPorIdCuenta(uint idCuentaL)
-    {
-        var query = "SELECT * FROM Inventario WHERE idCuentaL = @IdCuentaL LIMIT 1";
-        return _connection.QuerySingleOrDefault<Inventario>(query, new { IdCuentaL = idCuentaL });
+        public void EliminarInventario(uint idInventario)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdInventario", idInventario);
+
+            _conexion.Execute("EliminarInventario", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public Inventario? ObtenerInventario(uint idInventario)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@unIdInventario", idInventario);
+
+            return _conexion.QueryFirstOrDefault<Inventario>("ObtenerDetallesInventario", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public IEnumerable<Inventario> ObtenerInventarios()
+        {
+            const string query = "SELECT * FROM Inventario";
+            return _conexion.Query<Inventario>(query).ToList();
+        }
     }
-} 
+}
