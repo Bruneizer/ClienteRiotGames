@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Dapper;
 using System.Data;
-using System.Data.SqlClient;
 using ClienteRiotGames.Core;
 
 namespace ClienteRiotGames.Dapper
@@ -26,7 +25,7 @@ namespace ClienteRiotGames.Dapper
         }
 
         public int ObtenerServerId(string nombre)
-            => _dbConnection.QuerySingle<int>("SELECT idServer FROM Server WHERE Nombre = @Nombre", new { Nombre = nombre });
+            => _dbConnection.QuerySingle<int>("SELECT idServer FROM Server WHERE Nombre = @UnNombre", new { UnNombre = nombre });
 
         public void ActualizarServer(int idServer, string nombre, string abreviado)
         {
@@ -38,7 +37,48 @@ namespace ClienteRiotGames.Dapper
         }
 
         public void EliminarServer(int idServer)
-            => _dbConnection.Execute("EliminarServer", new { UnidServer = idServer }, commandType: CommandType.StoredProcedure);
+        {
+            // Eliminar registros dependientes en cuentariot
+            var parametrosDependientes = new DynamicParameters();
+            parametrosDependientes.Add("@unIdServer", idServer);
+            var cuentasRiot = _dbConnection.Query<uint>("SELECT idCuenta FROM cuentariot WHERE idServer = @unIdServer", parametrosDependientes).ToList();
+
+            foreach (var idCuenta in cuentasRiot)
+            {
+                // Eliminar registros dependientes en cuenta lol
+                var parametrosCuentaLOL = new DynamicParameters();
+                parametrosCuentaLOL.Add("@UnidCuenta", idCuenta);
+                var cuentasLOL = _dbConnection.Query<uint>("SELECT idCuentaL FROM cuentaleagueofleguends WHERE idCuenta = @UnidCuenta", parametrosCuentaLOL).ToList();
+
+                foreach (var idCuentaL in cuentasLOL)
+                {
+                    // Eliminar registros dependientes en inventario
+                    var parametrosInventario = new DynamicParameters();
+                    parametrosInventario.Add("@unIdCuentaL", idCuentaL);
+                    _dbConnection.Execute("DELETE FROM inventario WHERE idCuentaL = @unIdCuentaL", parametrosInventario);
+
+                    // Eliminar la cuenta lol
+                    var parametrosEliminarCuentaLOL = new DynamicParameters();
+                    parametrosEliminarCuentaLOL.Add("@UnidCuentaL", idCuentaL);
+                    _dbConnection.Execute("DELETE FROM cuentaleagueofleguends WHERE idCuentaL = @UnidCuentaL", parametrosEliminarCuentaLOL);
+                }
+
+                // Eliminar registros dependientes en cuenta valorant
+                var parametrosCuentaValorant = new DynamicParameters();
+                parametrosCuentaValorant.Add("@UnidCuenta", idCuenta);
+                _dbConnection.Execute("DELETE FROM CuentaValorant WHERE idCuenta = @UnidCuenta", parametrosCuentaValorant);
+
+                // Eliminar la cuenta riot
+                var parametrosCuentaRiot = new DynamicParameters();
+                parametrosCuentaRiot.Add("@UnidCuenta", idCuenta);
+                _dbConnection.Execute("DELETE FROM cuentariot WHERE idCuenta = @UnidCuenta", parametrosCuentaRiot);
+            }
+
+            // Eliminar el registro en server
+            var parametros = new DynamicParameters();
+            parametros.Add("@UnidServer", idServer);
+            _dbConnection.Execute("EliminarServer", parametros, commandType: CommandType.StoredProcedure);
+        }
 
         public Server? ObtenerServer(int idServer)
             => _dbConnection.QueryFirstOrDefault<Server>("ObtenerServer", new { UnidServer = idServer }, commandType: CommandType.StoredProcedure);
@@ -66,13 +106,20 @@ namespace ClienteRiotGames.Dapper
         #region CuentaRiot
 
         public void InsertarCuentaRiot(string nombre, string password, string email, byte idServer)
-            => _dbConnection.Execute("InsertarCuentaRiot", new { Nombre = nombre, Password = password, Email = email, IdServer = idServer }, commandType: CommandType.StoredProcedure);
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("@UnNombre", nombre);
+            parametros.Add("@UnPassword", password);
+            parametros.Add("@UnEmail", email);
+            parametros.Add("@UnidServer", idServer);
+            _dbConnection.Execute("InsertarCuentaRiot", parametros, commandType: CommandType.StoredProcedure);
+        }
 
         public uint ObtenerCuentaRiotId(string email)
             => _dbConnection.ExecuteScalar<uint>("SELECT idCuenta FROM CuentaRiot WHERE eMail = @Email", new { Email = email });
 
         public void ActualizarCuentaRiot(uint idCuenta, string nombre, string password, string email)
-            => _dbConnection.Execute("ActualizarCuentaRiot", new { UnidCuenta = idCuenta, UnNombreUsuario = nombre, UnPassword = password, UneMail = email }, commandType: CommandType.StoredProcedure);
+            => _dbConnection.Execute("ActualizarCuentaRiot", new { UnidCuenta = idCuenta, UnNombre = nombre, UnPassword = password, UneMail = email }, commandType: CommandType.StoredProcedure);
 
         public void EliminarCuentaRiot(uint idCuenta)
             => _dbConnection.Execute("EliminarCuentaRiot", new { UnidCuenta = idCuenta }, commandType: CommandType.StoredProcedure);
@@ -141,42 +188,31 @@ namespace ClienteRiotGames.Dapper
             parametros.Add("@unNombre", nombre);
             parametros.Add("@unNumero", numero);
             parametros.Add("@unPuntosCompetitivo", puntosCompetitivo);
-
             _dbConnection.Execute("InsertarRangoL", parametros, commandType: CommandType.StoredProcedure);
         }
 
         public void ActualizarRangoL(byte idRangoL, string nombre, int numero, int puntosCompetitivo)
         {
             var parametros = new DynamicParameters();
-            parametros.Add("@unIdRangoL", idRangoL);
-            parametros.Add("@unNombre", nombre);
-            parametros.Add("@unNumero", numero);
-            parametros.Add("@unPuntosCompetitivo", puntosCompetitivo);
-
+            parametros.Add("@UnidRangoL", idRangoL);
+            parametros.Add("@UnNombre", nombre);
+            parametros.Add("@UnNumero", numero);
+            parametros.Add("@UnPuntosCompetitivo", puntosCompetitivo);
             _dbConnection.Execute("ActualizarRangoL", parametros, commandType: CommandType.StoredProcedure);
         }
 
         public void EliminarRangoL(byte idRangoL)
         {
             var parametros = new DynamicParameters();
-            parametros.Add("@unIdRangoL", idRangoL);
-
+            parametros.Add("@UnidRangoL", idRangoL);
             _dbConnection.Execute("EliminarRangoL", parametros, commandType: CommandType.StoredProcedure);
         }
 
         public RangoL? ObtenerRangoL(byte idRangoL)
-        {
-            var parametros = new DynamicParameters();
-            parametros.Add("@unIdRangoL", idRangoL);
-
-            return _dbConnection.QueryFirstOrDefault<RangoL>("ObtenerDetallesRangoL", parametros, commandType: CommandType.StoredProcedure);
-        }
+            => _dbConnection.QueryFirstOrDefault<RangoL>("ObtenerRangoL", new { UnidRangoL = idRangoL }, commandType: CommandType.StoredProcedure);
 
         public IEnumerable<RangoL> ObtenerRangosL()
-        {
-            const string query = "SELECT * FROM RangoL";
-            return _dbConnection.Query<RangoL>(query).ToList();
-        }
+            => _dbConnection.Query<RangoL>("SELECT * FROM RangoL");
 
         #endregion
 
@@ -188,42 +224,31 @@ namespace ClienteRiotGames.Dapper
             parametros.Add("@unNombre", nombre);
             parametros.Add("@unNumero", numero);
             parametros.Add("@unPuntosCompetitivo", puntosCompetitivo);
-
             _dbConnection.Execute("InsertarRangoV", parametros, commandType: CommandType.StoredProcedure);
         }
 
         public void ActualizarRangoV(byte idRangoV, string nombre, int numero, int puntosCompetitivo)
         {
             var parametros = new DynamicParameters();
-            parametros.Add("@unIdRangoV", idRangoV);
-            parametros.Add("@unNombre", nombre);
-            parametros.Add("@unNumero", numero);
-            parametros.Add("@unPuntosCompetitivo", puntosCompetitivo);
-
+            parametros.Add("@UnidRangoV", idRangoV);
+            parametros.Add("@UnNombre", nombre);
+            parametros.Add("@UnNumero", numero);
+            parametros.Add("@UnPuntosCompetitivo", puntosCompetitivo);
             _dbConnection.Execute("ActualizarRangoV", parametros, commandType: CommandType.StoredProcedure);
         }
 
         public void EliminarRangoV(byte idRangoV)
         {
             var parametros = new DynamicParameters();
-            parametros.Add("@unIdRangoV", idRangoV);
-
+            parametros.Add("@UnidRangoV", idRangoV);
             _dbConnection.Execute("EliminarRangoV", parametros, commandType: CommandType.StoredProcedure);
         }
 
         public RangoV? ObtenerRangoV(byte idRangoV)
-        {
-            var parametros = new DynamicParameters();
-            parametros.Add("@unIdRangoV", idRangoV);
-
-            return _dbConnection.QueryFirstOrDefault<RangoV>("ObtenerDetallesRangoV", parametros, commandType: CommandType.StoredProcedure);
-        }
+            => _dbConnection.QueryFirstOrDefault<RangoV>("ObtenerRangoV", new { UnidRangoV = idRangoV }, commandType: CommandType.StoredProcedure);
 
         public IEnumerable<RangoV> ObtenerRangosV()
-        {
-            const string query = "SELECT * FROM RangoV";
-            return _dbConnection.Query<RangoV>(query).ToList();
-        }
+            => _dbConnection.Query<RangoV>("SELECT * FROM RangoV");
 
         #endregion
 
@@ -232,7 +257,7 @@ namespace ClienteRiotGames.Dapper
         public void InsertarInventario(uint idCuentaL, uint esenciaAzul, uint puntosRiot)
         {
             var parametros = new DynamicParameters();
-            parametros.Add("@unIdCuentaL", idCuentaL);
+            parametros.Add("@UnidCuentaL", idCuentaL);
             parametros.Add("@unEsenciaAzul", esenciaAzul);
             parametros.Add("@unPuntosRiot", puntosRiot);
 
@@ -351,10 +376,24 @@ namespace ClienteRiotGames.Dapper
 
         public Objeto? ObtenerObjeto(int idObjeto)
         {
-            var parametros = new DynamicParameters();
-            parametros.Add("@unIdObjeto", idObjeto);
+            const string query = @"
+                SELECT o.*, t.*
+                FROM Objeto o
+                JOIN TipoObjeto t ON o.idTipoObjeto = t.idTipoObjeto
+                WHERE o.idObjeto = @IdObjeto";
 
-            return _dbConnection.QueryFirstOrDefault<Objeto>("ObtenerDetallesObjeto", parametros, commandType: CommandType.StoredProcedure);
+            var objeto = _dbConnection.Query<Objeto, TipoObjeto, Objeto>(
+                query,
+                (obj, tipo) =>
+                {
+                    obj.TipoObjeto = tipo;
+                    return obj;
+                },
+                new { IdObjeto = idObjeto },
+                splitOn: "idTipoObjeto"
+            ).FirstOrDefault();
+
+            return objeto;
         }
 
         public IEnumerable<Objeto> ObtenerObjetos()
@@ -403,7 +442,7 @@ namespace ClienteRiotGames.Dapper
             var parametros = new DynamicParameters();
             parametros.Add("UnidCuentaL", idCuentaL, DbType.UInt32);
 
-            return _dbConnection.QueryFirstOrDefault<CuentaLeagueOfLeguends>("ObtenerDetallesCuentaLOL", parametros, commandType: CommandType.StoredProcedure);
+            return _dbConnection.QueryFirstOrDefault<CuentaLeagueOfLeguends>("SELECT * FROM CuentaLeagueOfLeguends WHERE idCuentaL = @UnidCuentaL", parametros);
         }
 
         public IEnumerable<CuentaLeagueOfLeguends> ObtenerCuentasLOL()

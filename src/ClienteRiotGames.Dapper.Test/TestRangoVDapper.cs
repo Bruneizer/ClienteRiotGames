@@ -6,8 +6,8 @@ namespace ClienteRiotGames.Test
     public class TestRangoVDapper : TestAdo
     {
         [Theory]
-        [InlineData("Rango1", 6, 78)]
-        [InlineData("Rango2", 7, 20)]
+        [InlineData("Rango1", 6, 20)]
+        [InlineData("Rango2", 7, 21)]
         public void InsertarYObtenerRangoV(string nombre, int numero, int puntosCompetitivo)
         {
             Ado.InsertarRangoV(nombre, numero, puntosCompetitivo);

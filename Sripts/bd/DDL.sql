@@ -25,13 +25,13 @@ DROP TABLE IF EXISTS `ClienteRiotGames`.`CuentaRiot` ;
 
 CREATE TABLE IF NOT EXISTS `ClienteRiotGames`.`CuentaRiot` (
   `idCuenta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Nombre` VARCHAR(50) NULL,
+  `Nombre` VARCHAR(50) NOT NULL,
   `Password` VARCHAR(255) NULL,
-  `eMail` VARCHAR(45) NULL,
+  `Email` VARCHAR(45) NULL,
   `idServer` TINYINT UNSIGNED NOT NULL,
-  PRIMARY KEY (`idCuenta`, `idServer`),
+  PRIMARY KEY (`idCuenta`),
   INDEX `fk_CuentaRiot_Server_idx` (`idServer` ASC) VISIBLE,
-  UNIQUE INDEX `eMail_UNIQUE` (`eMail` ASC) VISIBLE,
+  UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
   UNIQUE INDEX `Nombre_UNIQUE` (`Nombre` ASC) VISIBLE,
   CONSTRAINT `fk_CuentaRiot_Server`
     FOREIGN KEY (`idServer`)

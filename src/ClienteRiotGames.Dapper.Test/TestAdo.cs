@@ -1,3 +1,4 @@
+// filepath: /c:/Users/Lore/Documents/GitHub/ClienteRiotGames/src/ClienteRiotGames.Dapper.Test/TestAdo.cs
 using ClienteRiotGames.Core;
 using ClienteRiotGames.Dapper;
 using System.Data;

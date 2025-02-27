@@ -71,34 +71,34 @@ END $$
 
 -- Store Procedures para CuentaRiot
 CREATE PROCEDURE InsertarCuentaRiot(
-    IN Nombre VARCHAR(45),
-    IN Password VARCHAR(45),
-    IN Email VARCHAR(45),
-    IN IdServer TINYINT
+    IN UnNombre VARCHAR(50),
+    IN UnPassword VARCHAR(255),
+    IN UnEmail VARCHAR(45),
+    IN UnIdServer TINYINT
 )
 BEGIN
-    IF LENGTH(Email) > 45 THEN
+    IF LENGTH(UnEmail) > 45 THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'El email es demasiado largo';
+        SET MESSAGE_TEXT = 'El Email es demasiado largo';
     END IF;
 
     INSERT INTO CuentaRiot(Nombre, Password, Email, IdServer)
-    VALUES (Nombre, Password, Email, IdServer);
+    VALUES (UnNombre,UnPassword, UnEmail, UnIdServer);
 END $$
 
 CREATE PROCEDURE ActualizarCuentaRiot(
     IN UnidCuenta INT,
     IN UnidServer INT,
-    IN UneMail VARCHAR(100),
+    IN UnEmail VARCHAR(100),
     IN UnPassword VARCHAR(255),
-    IN UnNombreUsuario VARCHAR(50)
+    IN UnNombre VARCHAR(50)
 )
 BEGIN
     UPDATE CuentaRiot 
     SET idServer = UnidServer,
-        eMail = UneMail,
+        Email = UnEmail,
         Password = UnPassword,
-        NombreUsuario = UnNombreUsuario
+        Nombre = UnNombre
     WHERE idCuenta = UnidCuenta;
 END $$
 
@@ -111,14 +111,14 @@ END $$
 
 -- Store Functions para CuentaRiot
 CREATE FUNCTION fn_ExisteCuentaRiot(
-    UneMail VARCHAR(100)
+    UnEmail VARCHAR(100)
 ) RETURNS BOOLEAN
 DETERMINISTIC
 BEGIN
     DECLARE existe BOOLEAN;
     SELECT COUNT(*) > 0 INTO existe
     FROM CuentaRiot
-    WHERE eMail = UneMail;
+    WHERE Email = UnEmail;
     RETURN existe;
 END $$
 
@@ -372,19 +372,9 @@ CREATE PROCEDURE ObtenerDetallesCuentaRiot(
 )
 BEGIN
     SELECT CuentaRiot.*,
-           Server.Nombre AS NombreServer,
-           CuentaLeagueOfLeguends.Nombre AS NombreLOL,
-           CuentaLeagueOfLeguends.Nivel AS NivelLOL,
-           RangoL.Nombre AS RangoLOL,
-           CuentaValorant.Nombre AS NombreValorant,
-           CuentaValorant.Nivel AS NivelValorant,
-           RangoV.Nombre AS RangoValorant
+           Server.Nombre AS NombreServer
     FROM CuentaRiot
-    LEFT JOIN Server ON CuentaRiot.idServer = Server.idServer
-    LEFT JOIN CuentaLeagueOfLeguends ON CuentaRiot.idCuenta = CuentaLeagueOfLeguends.idCuenta
-    LEFT JOIN RangoL ON CuentaLeagueOfLeguends.idRangoL = RangoL.idRangoL
-    LEFT JOIN CuentaValorant ON CuentaRiot.idCuenta = CuentaValorant.idCuenta
-    LEFT JOIN RangoV ON CuentaValorant.idRangoV = RangoV.idRangoV
+    JOIN Server ON CuentaRiot.idServer = Server.idServer
     WHERE CuentaRiot.idCuenta = UnidCuenta;
 END $$
 
@@ -394,8 +384,8 @@ CREATE PROCEDURE ObtenerDetallesCuentaLOL(
 )
 BEGIN
     SELECT CuentaLeagueOfLeguends.*,
-           CuentaRiot.eMail,
-           CuentaRiot.NombreUsuario,
+           CuentaRiot.Email,
+           CuentaRiot.Nombre,
            Server.Nombre as NombreServer,
            RangoL.Nombre as NombreRango,
            Inventario.EsenciaAzul,
@@ -414,8 +404,8 @@ CREATE PROCEDURE ObtenerDetallesCuentaValorant(
 )
 BEGIN
     SELECT CuentaValorant.*,
-           CuentaRiot.eMail,
-           CuentaRiot.NombreUsuario,
+           CuentaRiot.Email,
+           CuentaRiot.Nombre,
            Server.Nombre as NombreServer,
            RangoV.Nombre as NombreRango
     FROM CuentaValorant
@@ -450,16 +440,18 @@ CREATE PROCEDURE ObtenerDetallesObjeto(
     IN UnidObjeto INT
 )
 BEGIN
-    SELECT Objeto.*,
+    SELECT Objeto.idObjeto,
+           Objeto.Nombre,
+           Objeto.PrecioEA,
+           Objeto.PrecioRP,
            TipoObjeto.Nombre as TipoObjeto,
            COUNT(InventarioObjeto.idInventario) as TotalInventarios
     FROM Objeto
-    JOIN TipoObjeto ON Objeto.idTipoObjeto = TipoObjeto.idTipoObjeto
+    LEFT JOIN TipoObjeto ON Objeto.idTipoObjeto = TipoObjeto.idTipoObjeto
     LEFT JOIN InventarioObjeto ON Objeto.idObjeto = InventarioObjeto.idObjeto
     WHERE Objeto.idObjeto = UnidObjeto
-    GROUP BY Objeto.idObjeto;
+    GROUP BY Objeto.idObjeto, Objeto.Nombre, Objeto.PrecioEA, Objeto.PrecioRP, TipoObjeto.Nombre;
 END $$
-
 -- Obtener detalles completos de RangoL
 CREATE PROCEDURE ObtenerDetallesRangoL(
     IN UnidRangoL INT
@@ -502,7 +494,7 @@ END $$
 DELIMITER $$
 
 CREATE PROCEDURE LoginCuentaRiot(
-    IN UneMail VARCHAR(45),
+    IN UnEmail VARCHAR(45),
     IN UnPassword VARCHAR(45),
     OUT UnResultado INT,
     OUT UnMensaje VARCHAR(100)
@@ -517,7 +509,7 @@ BEGIN
     SELECT idCuenta, Password 
     INTO cuenta_id, cuenta_password
     FROM CuentaRiot 
-    WHERE eMail = UneMail;
+    WHERE Email = UnEmail;
     
     IF cuenta_id IS NULL THEN
         SET UnMensaje = 'Email no encontrado';
@@ -529,8 +521,8 @@ BEGIN
 
             SELECT 
                 cr.idCuenta,
-                cr.Nombre AS NombreUsuario,
-                cr.eMail,
+                cr.Nombre AS Nombre,
+                cr.Email,
                 s.Nombre AS NombreServer,
                 s.Abreviado AS AbreviadoServer,
                 COALESCE(cl.Nombre, '') AS NombreLOL,

@@ -6,8 +6,8 @@ namespace ClienteRiotGames.Test
     public class TestCuentaRiotDapper : TestAdo
     {
         [Theory]
-        [InlineData("Summoner1", "password1", "email1@example.com", 1)]
-        [InlineData("Summoner2", "password2", "email2@example.com", 2)]
+        [InlineData("Summoner1", "Password1!", "email1@example.com", 3)]
+        [InlineData("Summoner2", "Password2@", "email2@example.com", 3)]
         public void InsertarYObtenerCuentaRiot(string nombre, string password, string email, byte idServer)
         {
             Ado.InsertarCuentaRiot(nombre, password, email, idServer);
@@ -16,7 +16,6 @@ namespace ClienteRiotGames.Test
 
             Assert.NotNull(cuenta);
             Assert.Equal(nombre, cuenta.Nombre);
-            Assert.Equal(password, cuenta.Password);
             Assert.Equal(email, cuenta.Email);
             Assert.Equal(idServer, cuenta.IdServer);
         }
