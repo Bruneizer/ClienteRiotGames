@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClienteRiotGames.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16c77fe3c2f65fc929b691cf77377cb969b06d47")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e73be2193ee48ea7b1717fdc6a63e53f035136a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClienteRiotGames.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClienteRiotGames.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
